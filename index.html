@@ -379,21 +379,31 @@
                 <div class="beta-form-container">
   <h3>簡単30秒で登録完了</h3>
   <p class="form-note">登録後すぐにアプリのリンクをメールでお送りします</p>
+                    
+　<!-- PC用：iframe埋め込み -->
+  <div class="form-placeholder desktop-form">
+      <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLScoq4DGOBxoOMijae8JbwnvGD5Zs84J34Gr1M6fr9aymp5-aQ/viewform?embedded=true"
+          style="width: 100%; height: 700px; border: none; border-radius: 0.5rem;"
+          frameborder="0">
+    　</iframe>
+  </div>  
 
-  <!-- Google Forms の iframe をここに埋め込む -->
-  <div class="form-placeholder">
-    <iframe
-      src="https://docs.google.com/forms/d/e/1FAIpQLScoq4DGOBxoOMijae8JbwnvGD5Zs84J34Gr1M6fr9aymp5-aQ/viewform?embedded=true"
-      style="width: 100%; min-height: 950px; border: none; border-radius: 0.5rem; display: block;"  
-      frameborder="0"
-      marginheight="0"
-      marginwidth="0"
-    >
-      読み込んでいます…
-    </iframe>
-  </div>
+　<!-- スマホ用：外部リンクボタン -->
+   <div class="mobile-form">
+       <a href="https://docs.google.com/forms/d/e/1FAIpQLScoq4DGOBxoOMijae8JbwnvGD5Zs84J34Gr1M6fr9aymp5-aQ/viewform"
+           target="_blank"
+           class="cta-button-primary"
+           style="display: block; text-align: center; margin: 2rem auto; max-width: 400px; text-decoration: none;">
+           　📝 登録フォームを開く
+           </a>
+       　　<p style="text-align: center; font-size: 0.875rem; color: var(--text-light); margin-top: 1rem;">
+             ※ 新しいタブでフォームが開きます
+        　　</p>
+    </div>
+
+    <p class="form-privacy">ご入力いただいた情報は、Vincent Botのベータ版提供のみに使用します。</p>
 </div>
-
 
 
                 <div class="beta-footer">
