@@ -1118,6 +1118,30 @@ body {
 .mt-3 { margin-top: var(--spacing-lg); }
 
 /* ==========================================
+   フォーム表示切り替え（PC/スマホ）
+   ========================================== */
+.desktop-form {
+   display: block;
+}
+
+.mobile-form {
+   display: none;
+}
+
+@media (max-width: 768px) {
+   .desktop-form {
+      display: none;
+   }
+
+   .mobile-form {
+      display: block;
+   }
+}
+```
+
+---
+
+/* ==========================================
    Developer Section
    ========================================== */
 .developer-section {
