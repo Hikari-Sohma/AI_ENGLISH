@@ -1158,9 +1158,23 @@ body {
 
 .developers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-2xl);
+}
+
+/* 3人の場合は最大3列 */
+@media (min-width: 1200px) {
+    .developers-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* タブレット: 2列 */
+@media (max-width: 1199px) and (min-width: 769px) {
+    .developers-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .developer-card {
