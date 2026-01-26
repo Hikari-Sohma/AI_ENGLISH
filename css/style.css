@@ -1158,22 +1158,29 @@ body {
 
 .developers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-2xl);
 }
 
 /* 3人の場合は最大3列 */
-@media (min-width: 1200px) {
+@media (min-width: 1100px) {
     .developers-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 /* タブレット: 2列 */
-@media (max-width: 1199px) and (min-width: 769px) {
+@media (max-width: 769px) and (min-width: 1099px) {
     .developers-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* スマホ: 1列表示 */
+@media (max-width: 768px) {
+    .developers-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -1187,6 +1194,8 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    min-width: 0;
+    width: 100%;
 }
 
 .developer-card:hover {
