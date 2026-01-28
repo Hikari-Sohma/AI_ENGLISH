@@ -440,18 +440,66 @@
         </div>
     </section>
 
-   <!-- Note Articles Section -->
-    <section class="note-articles">
+  <!-- Note Articles Section -->
+<section class="note-articles">
     <div class="container">
         <h2 class="section-title">AI英語学習ブログ</h2>
-        <p class="section-subtitle">効果的な英語学習法とAI活用のヒントを発信中！</p>
+        <p class="section-subtitle">効果的な英語学習法とAI活用のヒントを発信中</p>
         
-        <!-- 記事が自動で表示される -->
-        <div class="articles-grid" id="note-articles-container">
-            <!-- ローディング表示 -->
-            <div class="loading-message">
-                <p>記事を読み込んでいます...</p>
-            </div>
+        <div class="articles-grid">
+            <!-- 記事1 -->
+            <article class="article-card">
+                <a href="https://note.com/hikari_aidriven/n/n69ac0fc523f8" target="_blank" rel="noopener noreferrer">
+                    <div class="article-image">
+                        <div class="article-image-placeholder">📝</div>
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title">なぜ日本人は10年勉強しても英語が話せないのか？会話力の本質を見誤っている</h3>
+                        <p class="article-excerpt">
+                            「もっとスピーキングの練習をしなきゃ」「オンライン英会話を毎日やらなきゃ」英語が話せないと悩む人の多くがこう考えます。でも、本当にスピーキングの量が足りないだけでしょうか？会話ができない本当の理由は、スピーキング不足ではありません...
+                        </p>
+                        <div class="article-meta">
+                            <span class="article-date">2025.01.27</span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <!-- 記事2 -->
+            <article class="article-card">
+                <a href="https://note.com/hikari_aidriven/n/n368cc522a15e" target="_blank" rel="noopener noreferrer">
+                    <div class="article-image">
+                        <div class="article-image-placeholder">🤖</div>
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title">ChatGPTで英語は話せるようにならない。日本人がハマりがちな学習の誤りと、文法・イディオム習得に特化したAI学習法</h3>
+                        <p class="article-excerpt">
+                            ChatGPTやClaudeなどのAIツールで英語学習をしている人が増えています。しかし、多くの人が間違った使い方をしています。AIを使えば自動的に英語が話せるようになるわけではありません。文法とイディオムの習得に特化した正しいAI活用法とは...
+                        </p>
+                        <div class="article-meta">
+                            <span class="article-date">2025.01.26</span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <!-- 記事3 -->
+            <article class="article-card">
+                <a href="https://note.com/hikari_aidriven/n/n686ae0266bc8" target="_blank" rel="noopener noreferrer">
+                    <div class="article-image">
+                        <div class="article-image-placeholder">💡</div>
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title">「海外経験ゼロ」でTOEIC800点超え・英語通訳者・英語講師になった私が伝えたい、AIも活用した英語学習法について</h3>
+                        <p class="article-excerpt">
+                            留学経験なし、海外在住経験もゼロ。それでも通訳レベルの英語力を習得し、Native Camp講師として活躍するまでになりました。その過程で学んだ効果的な学習法と、AI時代の新しい英語学習アプローチについてお伝えします...
+                        </p>
+                        <div class="article-meta">
+                            <span class="article-date">2025.01.25</span>
+                        </div>
+                    </div>
+                </a>
+            </article>
         </div>
 
         <!-- もっと見るボタン -->
@@ -462,93 +510,6 @@
         </div>
     </div>
 </section>
-
-<script>
-// ==========================================
-// Note Articles Auto-Load
-// ==========================================
-async function loadNoteArticles() {
-    const noteUsername = 'hikari_aidriven'; // ← ここにnoteのユーザー名を入れる
-    const articlesContainer = document.getElementById('note-articles-container');
-    
-    // noteのRSS URL
-    const rssUrl = `https://note.com/${noteUsername}/rss`;
-    
-    try {
-        // RSS-to-JSONサービスを使用してRSSを取得
-        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&api_key=YOUR_API_KEY&count=3`);
-        
-        if (!response.ok) {
-            throw new Error('記事の取得に失敗しました');
-        }
-        
-        const data = await response.json();
-        
-        if (data.status !== 'ok' || !data.items || data.items.length === 0) {
-            throw new Error('記事が見つかりませんでした');
-        }
-        
-        // 最新3記事を取得
-        const articles = data.items.slice(0, 3);
-        
-        // HTMLを生成
-        articlesContainer.innerHTML = articles.map(article => {
-            // 日付をフォーマット
-            const date = new Date(article.pubDate);
-            const formattedDate = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
-            
-            // 説明文を抽出（HTMLタグを除去して最初の150文字）
-            const description = article.description
-                .replace(/<[^>]*>/g, '') // HTMLタグを削除
-                .replace(/&nbsp;/g, ' ') // &nbsp;をスペースに
-                .substring(0, 150) + '...';
-            
-            // サムネイル画像（noteの場合はthumbnailまたはenclosureから取得）
-            let thumbnail = article.thumbnail || '';
-            if (!thumbnail && article.enclosure && article.enclosure.link) {
-                thumbnail = article.enclosure.link;
-            }
-            
-            return `
-                <article class="article-card">
-                    <a href="${article.link}" target="_blank" rel="noopener noreferrer">
-                        <div class="article-image">
-                            ${thumbnail 
-                                ? `<img src="${thumbnail}" alt="${article.title}">`
-                                : `<div class="article-image-placeholder">📝</div>`
-                            }
-                        </div>
-                        <div class="article-content">
-                            <h3 class="article-title">${article.title}</h3>
-                            <p class="article-excerpt">${description}</p>
-                            <div class="article-meta">
-                                <span class="article-date">${formattedDate}</span>
-                            </div>
-                        </div>
-                    </a>
-                </article>
-            `;
-        }).join('');
-        
-    } catch (error) {
-        console.error('Note記事の取得エラー:', error);
-        
-        // エラーメッセージを表示
-        articlesContainer.innerHTML = `
-            <div class="error-message">
-                <p>記事の読み込みに失敗しました</p>
-                <p><a href="https://note.com/${noteUsername}/" target="_blank" rel="noopener noreferrer">noteで記事を見る →</a></p>
-            </div>
-        `;
-    }
-}
-
-// ページ読み込み完了後に実行
-document.addEventListener('DOMContentLoaded', loadNoteArticles);
-</script>
-
-</body>
-</html>
     
 
     <!-- FAQ Section -->
