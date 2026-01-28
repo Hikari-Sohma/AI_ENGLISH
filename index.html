@@ -444,7 +444,7 @@
     <section class="note-articles">
     <div class="container">
         <h2 class="section-title">AI英語学習ブログ</h2>
-        <p class="section-subtitle">効果的な英語学習法とAI活用のヒントを発信中</p>
+        <p class="section-subtitle">効果的な英語学習法とAI活用のヒントを発信中！</p>
         
         <!-- 記事が自動で表示される -->
         <div class="articles-grid" id="note-articles-container">
@@ -456,12 +456,100 @@
 
         <!-- もっと見るボタン -->
         <div class="articles-cta">
-            <a href="https://note.com/YOUR_NOTE_USERNAME/" target="_blank" class="cta-button-secondary">
+            <a href="https://note.com/hikari_aidriven/" target="_blank" class="cta-button-secondary">
                 すべての記事を見る →
             </a>
         </div>
     </div>
 </section>
+
+<script>
+// ==========================================
+// Note Articles Auto-Load
+// ==========================================
+async function loadNoteArticles() {
+    const noteUsername = 'hikari_aidriven'; // ← ここにnoteのユーザー名を入れる
+    const articlesContainer = document.getElementById('note-articles-container');
+    
+    // noteのRSS URL
+    const rssUrl = `https://note.com/${noteUsername}/rss`;
+    
+    try {
+        // RSS-to-JSONサービスを使用してRSSを取得
+        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&api_key=YOUR_API_KEY&count=3`);
+        
+        if (!response.ok) {
+            throw new Error('記事の取得に失敗しました');
+        }
+        
+        const data = await response.json();
+        
+        if (data.status !== 'ok' || !data.items || data.items.length === 0) {
+            throw new Error('記事が見つかりませんでした');
+        }
+        
+        // 最新3記事を取得
+        const articles = data.items.slice(0, 3);
+        
+        // HTMLを生成
+        articlesContainer.innerHTML = articles.map(article => {
+            // 日付をフォーマット
+            const date = new Date(article.pubDate);
+            const formattedDate = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+            
+            // 説明文を抽出（HTMLタグを除去して最初の150文字）
+            const description = article.description
+                .replace(/<[^>]*>/g, '') // HTMLタグを削除
+                .replace(/&nbsp;/g, ' ') // &nbsp;をスペースに
+                .substring(0, 150) + '...';
+            
+            // サムネイル画像（noteの場合はthumbnailまたはenclosureから取得）
+            let thumbnail = article.thumbnail || '';
+            if (!thumbnail && article.enclosure && article.enclosure.link) {
+                thumbnail = article.enclosure.link;
+            }
+            
+            return `
+                <article class="article-card">
+                    <a href="${article.link}" target="_blank" rel="noopener noreferrer">
+                        <div class="article-image">
+                            ${thumbnail 
+                                ? `<img src="${thumbnail}" alt="${article.title}">`
+                                : `<div class="article-image-placeholder">📝</div>`
+                            }
+                        </div>
+                        <div class="article-content">
+                            <h3 class="article-title">${article.title}</h3>
+                            <p class="article-excerpt">${description}</p>
+                            <div class="article-meta">
+                                <span class="article-date">${formattedDate}</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            `;
+        }).join('');
+        
+    } catch (error) {
+        console.error('Note記事の取得エラー:', error);
+        
+        // エラーメッセージを表示
+        articlesContainer.innerHTML = `
+            <div class="error-message">
+                <p>記事の読み込みに失敗しました</p>
+                <p><a href="https://note.com/${noteUsername}/" target="_blank" rel="noopener noreferrer">noteで記事を見る →</a></p>
+            </div>
+        `;
+    }
+}
+
+// ページ読み込み完了後に実行
+document.addEventListener('DOMContentLoaded', loadNoteArticles);
+</script>
+
+</body>
+</html>
+    
 
     <!-- FAQ Section -->
     <section class="faq">
